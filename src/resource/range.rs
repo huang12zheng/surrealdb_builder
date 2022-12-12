@@ -7,11 +7,11 @@ pub struct StringRange {
     pub end: String,
 }
 
-impl Into<Range<Id>> for StringRange {
-    fn into(self) -> Range<Id> {
+impl From<StringRange> for Range<Id> {
+    fn from(val: StringRange) -> Self {
         (
-            Bound::<Id>::Included(self.start.into()),
-            Bound::<Id>::Included(self.end.into()),
+            Bound::<Id>::Included(val.start.into()),
+            Bound::<Id>::Included(val.end.into()),
         )
             .into()
     }
