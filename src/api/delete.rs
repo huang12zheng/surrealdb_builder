@@ -2,8 +2,6 @@
 macro_rules! delete {
     ($model:ident) => {
         paste::paste! {
-            pub struct [< $model Controller >];
-
             impl [< $model Controller >] {
                 pub async fn delete_thing(&self, resource: String) -> anyhow::Result<()> {
                     let db = DB.get().unwrap();
@@ -64,5 +62,6 @@ mod test {
     pub struct User {
         id: u64,
     }
+    pub struct UserController;
     delete!(User);
 }

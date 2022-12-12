@@ -9,11 +9,11 @@ pub struct EdgesMirror {
     pub what: Tables,
 }
 
-pub trait IntoEdgess {
+pub trait IntoEdges {
     fn into_edges(self) -> Edges;
 }
 
-impl IntoEdgess for EdgesMirror {
+impl IntoEdges for EdgesMirror {
     fn into_edges(self) -> Edges {
         Edges {
             dir: self.dir,

@@ -2,8 +2,6 @@
 macro_rules! select {
     ($model:ident) => {
         paste::paste! {
-            pub struct [< $model Controller >];
-
             impl [< $model Controller >] {
                 pub async fn select_thing(&self, resource: String) -> anyhow::Result<$model > {
                     let db = DB.get().unwrap();
@@ -29,14 +27,14 @@ macro_rules! select {
 
                 pub async fn select_edges(
                     &self,
-                    resource: Edges,
+                    resource: EdgesMirror,
                     range: Option<StringRange>,
                 ) -> anyhow::Result<Vec<$model >> {
                     let db = DB.get().unwrap();
                     if let Some(range) = range {
-                        Ok(db.select(resource).range(range).await.unwrap())
+                        Ok(db.select(resource.into_edges()).range(range).await.unwrap())
                     } else {
-                        Ok(db.select(resource).await.unwrap())
+                        Ok(db.select(resource.into_edges()).await.unwrap())
                     }
                 }
 
@@ -64,5 +62,6 @@ mod test {
     pub struct User {
         id: u64,
     }
+    pub struct UserController;
     select!(User);
 }

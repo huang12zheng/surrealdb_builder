@@ -2,8 +2,6 @@
 macro_rules! create {
     ($model:ident) => {
         paste::paste! {
-            pub struct [< $model Controller >];
-
             impl [< $model Controller >] {
                 pub async fn create_thing(&self, resource: String, content: $model) -> anyhow::Result<$model> {
                     let db = DB.get().unwrap();
@@ -53,5 +51,6 @@ mod test {
     pub struct User {
         id: u64,
     }
+    pub struct UserController;
     create!(User);
 }
