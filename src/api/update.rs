@@ -5,9 +5,9 @@ macro_rules! update {
             pub struct [< $model Controller >];
 
             impl [< $model Controller >] {
-                pub async fn update_thing(&self, resource: Thing, content: $model) -> anyhow::Result<$model > {
+                pub async fn update_thing(&self, resource: String, content: $model) -> anyhow::Result<$model > {
                     let db = DB.get().unwrap();
-                    Ok(db.update(resource).content(content).await.unwrap())
+                    Ok(db.update((stringify!($model),resource).into_thing()).content(content).await.unwrap())
                 }
                 pub async fn update_json(&self, resource: String, content: $model) -> anyhow::Result<$model > {
                     let db = DB.get().unwrap();
@@ -28,19 +28,19 @@ macro_rules! update {
                     }
                 }
 
-                pub async fn update_edges(
-                    &self,
-                    resource: Edges,
-                    range: Option<StringRange>,
-                    content: $model
-                ) -> anyhow::Result<Vec<$model >> {
-                    let db = DB.get().unwrap();
-                    if let Some(range) = range {
-                        Ok(db.update(resource).range(range).content(content).await.unwrap())
-                    } else {
-                        Ok(db.update(resource).content(content).await.unwrap())
-                    }
-                }
+                // pub async fn update_edges(
+                //     &self,
+                //     resource: Edges,
+                //     range: Option<StringRange>,
+                //     content: $model
+                // ) -> anyhow::Result<Vec<$model >> {
+                //     let db = DB.get().unwrap();
+                //     if let Some(range) = range {
+                //         Ok(db.update(resource).range(range).content(content).await.unwrap())
+                //     } else {
+                //         Ok(db.update(resource).content(content).await.unwrap())
+                //     }
+                // }
 
                 pub async fn update_table(
                     &self,
@@ -60,6 +60,7 @@ macro_rules! update {
     };
 }
 #[cfg(test)]
+#[allow(dead_code)]
 mod test {
     use crate::api::dependencies::*;
     #[derive(Serialize, Deserialize, Clone)]

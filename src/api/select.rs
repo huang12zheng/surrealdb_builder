@@ -5,9 +5,9 @@ macro_rules! select {
             pub struct [< $model Controller >];
 
             impl [< $model Controller >] {
-                pub async fn select_thing(&self, resource: Thing) -> anyhow::Result<$model > {
+                pub async fn select_thing(&self, resource: String) -> anyhow::Result<$model > {
                     let db = DB.get().unwrap();
-                    Ok(db.select(resource).await.unwrap())
+                    Ok(db.select((stringify!($model),resource).into_thing()).await.unwrap())
                 }
                 pub async fn select_json(&self, resource: String) -> anyhow::Result<$model > {
                     let db = DB.get().unwrap();
@@ -57,6 +57,7 @@ macro_rules! select {
     };
 }
 #[cfg(test)]
+#[allow(dead_code)]
 mod test {
     use crate::api::dependencies::*;
     #[derive(Serialize, Deserialize, Clone)]
