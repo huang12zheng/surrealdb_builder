@@ -4,7 +4,7 @@ mod object;
 pub use array::*;
 pub use edges::*;
 pub use object::*;
-use surrealdb::sql::{json, thing, Thing, Value};
+use surrealdb::sql::{json, thing, Table, Tables, Thing, Value};
 
 use flutter_rust_bridge::frb;
 
@@ -36,5 +36,24 @@ impl IntoThing for (&str, String) {
             tb: self.0.to_owned(),
             id: self.1.into(),
         }
+    }
+}
+
+pub trait IntoTable {
+    fn into_table(self) -> Table;
+}
+
+impl IntoTable for String {
+    fn into_table(self) -> Table {
+        Table(self)
+    }
+}
+pub trait IntoTables {
+    fn into_tables(self) -> Tables;
+}
+
+impl IntoTables for Vec<String> {
+    fn into_tables(self) -> Tables {
+        Tables(self.into_iter().map(|e| e.into_table()).collect())
     }
 }

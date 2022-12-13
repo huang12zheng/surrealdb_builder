@@ -1,5 +1,5 @@
 mod api;
-pub mod lazy;
 mod resource;
-// pub use api::*;
+pub use api::patch::InnerOp;
+pub mod lazy;
 pub mod preload;

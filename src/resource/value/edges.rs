@@ -1,12 +1,13 @@
 use flutter_rust_bridge::frb;
 use surrealdb::sql::{Dir, Edges, Table, Tables};
 
-use super::IntoThing;
+use super::{IntoTables, IntoThing};
 
+#[derive(Default)]
 pub struct EdgesMirror {
     pub dir: Dir,
     pub from: String,
-    pub what: Tables,
+    pub what: Vec<String>,
 }
 
 pub trait IntoEdges {
@@ -18,7 +19,7 @@ impl IntoEdges for EdgesMirror {
         Edges {
             dir: self.dir,
             from: self.from.into_thing(),
-            what: self.what,
+            what: self.what.into_tables(),
         }
     }
 }
@@ -28,6 +29,3 @@ pub enum _Dir {
     Out,
     Both,
 }
-
-#[frb(mirror(Tables))]
-pub struct _Tables(pub Vec<Table>);
