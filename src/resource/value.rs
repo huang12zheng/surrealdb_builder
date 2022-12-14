@@ -48,6 +48,11 @@ impl IntoTable for String {
         Table(self)
     }
 }
+impl IntoTable for &str {
+    fn into_table(self) -> Table {
+        Table(self.to_string())
+    }
+}
 pub trait IntoTables {
     fn into_tables(self) -> Tables;
 }

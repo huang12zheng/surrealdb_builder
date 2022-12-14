@@ -38,14 +38,13 @@ macro_rules! select {
         }
         #[tokio::main(flavor = "current_thread")]
         pub async fn [<$model:snake _select_table>](
-            resource: String,
             range: Option<StringRange>,
         ) -> anyhow::Result<Vec<$model >> {
             let db = DB.get().unwrap();
             if let Some(range) = range {
-                Ok(db.select(resource.into_table()).range(range).await.unwrap())
+                Ok(db.select(stringify!($model).into_table()).range(range).await.unwrap())
             } else {
-                Ok(db.select(resource.into_table()).await.unwrap())
+                Ok(db.select(stringify!($model).into_table()).await.unwrap())
             }
         }
         }

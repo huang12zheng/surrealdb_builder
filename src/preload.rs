@@ -3,7 +3,7 @@ pub use crate::lazy::DB;
 pub use crate::resource::{
     EdgesMirror, IntoArray, IntoEdges, IntoObject, IntoTable, IntoThing, IntoValue, StringRange,
 };
-pub use crate::resource::{_Dir, _Table};
+
 pub use crate::InnerOp;
 pub use crate::{create, delete, patch, select, update};
 pub use flutter_rust_bridge::frb;

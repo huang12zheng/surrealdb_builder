@@ -22,11 +22,10 @@ macro_rules! create {
             }
             #[tokio::main(flavor = "current_thread")]
             pub async fn [<$model:snake _create_table>](
-                resource: String,
                 content: $model
             ) -> anyhow::Result<Vec<$model >> {
                 let db = DB.get().unwrap();
-                Ok(db.create(resource.into_table()).content(content).await.unwrap())
+                Ok(db.create(stringify!($model).into_table()).content(content).await.unwrap())
             }
         }
     };

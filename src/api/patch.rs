@@ -63,15 +63,14 @@ macro_rules! patch {
             }
             #[tokio::main(flavor = "current_thread")]
             pub async fn [<$model:snake _patch_table>](
-                resource: String,
                 range: Option<StringRange>,
                 content: InnerOp
             ) -> anyhow::Result<Vec<$model >> {
                 let db = DB.get().unwrap();
                 if let Some(range) = range {
-                    Ok(db.update(resource.into_table()).range(range).patch(content.into_patch_op()).await.unwrap())
+                    Ok(db.update(stringify!($model).into_table()).range(range).patch(content.into_patch_op()).await.unwrap())
                 } else {
-                    Ok(db.update(resource.into_table()).patch(content.into_patch_op()).await.unwrap())
+                    Ok(db.update(stringify!($model).into_table()).patch(content.into_patch_op()).await.unwrap())
                 }
             }
         }

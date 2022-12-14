@@ -26,14 +26,13 @@ macro_rules! delete {
             }
             #[tokio::main(flavor = "current_thread")]
             pub async fn [<$model:snake _delete_table>](
-                resource: String,
                 range: Option<StringRange>,
             ) -> anyhow::Result<()> {
                 let db = DB.get().unwrap();
                 if let Some(range) = range {
-                    Ok(db.delete(resource.into_table()).range(range).await.unwrap())
+                    Ok(db.delete(stringify!($model).into_table()).range(range).await.unwrap())
                 } else {
-                    Ok(db.delete(resource.into_table()).await.unwrap())
+                    Ok(db.delete(stringify!($model).into_table()).await.unwrap())
                 }
             }
         }

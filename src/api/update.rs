@@ -27,15 +27,14 @@ macro_rules! update {
             }
             #[tokio::main(flavor = "current_thread")]
             pub async fn [<$model:snake _update_table>](
-                resource: String,
                 range: Option<StringRange>,
                 content: $model
             ) -> anyhow::Result<Vec<$model >> {
                 let db = DB.get().unwrap();
                 if let Some(range) = range {
-                    Ok(db.update(resource.into_table()).range(range).content(content).await.unwrap())
+                    Ok(db.update(stringify!($model).into_table()).range(range).content(content).await.unwrap())
                 } else {
-                    Ok(db.update(resource.into_table()).content(content).await.unwrap())
+                    Ok(db.update(stringify!($model).into_table()).content(content).await.unwrap())
                 }
             }
         }

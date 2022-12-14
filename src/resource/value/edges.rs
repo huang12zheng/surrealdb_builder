@@ -1,5 +1,4 @@
-use flutter_rust_bridge::frb;
-use surrealdb::sql::{Dir, Edges, Table, Tables};
+use surrealdb::sql::{Dir, Edges};
 
 use super::{IntoTables, IntoThing};
 
@@ -22,10 +21,4 @@ impl IntoEdges for EdgesMirror {
             what: self.what.into_tables(),
         }
     }
-}
-#[frb(mirror(Dir))]
-pub enum _Dir {
-    In,
-    Out,
-    Both,
 }
