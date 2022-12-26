@@ -1,5 +1,5 @@
 // pub use crate::api::create::create;
-pub use crate::lazy::DB;
+pub use crate::lazy::*;
 pub use crate::resource::{
     EdgesMirror, IntoArray, IntoEdges, IntoObject, IntoTable, IntoThing, IntoValue, StringRange,
 };

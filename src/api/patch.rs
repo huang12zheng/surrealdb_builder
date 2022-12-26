@@ -81,6 +81,7 @@ macro_rules! patch {
 mod test {
     use super::*;
     use crate::api::dependencies::*;
+    use mem::DB;
     #[derive(Serialize, Deserialize, Clone)]
     pub struct User {
         id: u64,

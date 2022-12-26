@@ -34,6 +34,7 @@ macro_rules! create {
 #[allow(dead_code)]
 mod test {
     use crate::api::dependencies::*;
+    use mem::DB;
     #[derive(Serialize, Deserialize, Clone)]
     pub struct User {
         id: u64,
